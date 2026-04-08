@@ -35,6 +35,9 @@ public class LoginPage {
     @FindBy(css="[class*='SignInForm_ctaSignIn']")
     WebElement loginButton;
 
+    @FindBy(css="#succes , #failure")
+    WebElement alertMessage;
+
     public void openLoginPannel() {
         wait.until(
             ExpectedConditions.elementToBeClickable(
@@ -59,5 +62,16 @@ public class LoginPage {
 
     public void clickLoginButton() {
         loginButton.click();
+    }
+
+    public boolean checkAlertMessage(String expectedMessage) {
+        wait.until(
+            ExpectedConditions.visibilityOf(
+                alertMessage
+            )
+        );
+        return alertMessage.
+                getText().
+                equals(expectedMessage);
     }
 }

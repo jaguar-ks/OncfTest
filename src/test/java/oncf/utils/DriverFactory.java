@@ -6,16 +6,16 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-public class DriverFactory implements AutoCloseable {
+public class DriverFactory {
     static WebDriver driver;
-    final static DriverFactory instance = new DriverFactory();
     final static Dotenv dotEnv = Dotenv.load();
+    final static DriverFactory instance = new DriverFactory();
 
     private DriverFactory() {
         String browser = dotEnv.get("browser");
         if (browser == null)
             throw new IllegalArgumentException("VALUE ERROR: Browser not specified");
-        driver = switch (browser) {
+        DriverFactory.driver = switch (browser) {
             case "chrome" -> new ChromeDriver();
             case "firefox" -> new FirefoxDriver();
             default -> throw new IllegalArgumentException(
@@ -26,13 +26,23 @@ public class DriverFactory implements AutoCloseable {
         };
     }
 
-    @Override
-    public void close() {
-        if (driver != null)
-            driver.quit();
+    public static DriverFactory getInstance() {
+        if (DriverFactory.instance == null) {
+            String browser = dotEnv.get("browser");
+            if (browser == null)
+                throw new IllegalArgumentException("VALUE ERROR: Browser not specified");
+            DriverFactory.driver = switch (browser) {
+                case "chrome" -> new ChromeDriver();
+                case "firefox" -> new FirefoxDriver();
+                default -> throw new IllegalArgumentException(
+                    "VALUE ERROR: Browser '" +
+                    browser +
+                    "' not supported"
+                );
+            };
+        }
+        return DriverFactory.instance;
     }
-
-    public static DriverFactory getInstance() {return instance;}
 
     public static WebDriver getDriver() {return driver;}
 

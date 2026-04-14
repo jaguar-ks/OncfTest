@@ -9,7 +9,7 @@ import io.cucumber.java.Scenario;
 import oncf.utils.DriverFactory;
 
 public class BaseTest {
-    final DriverFactory factory = DriverFactory.getInstance();
+    DriverFactory factory = DriverFactory.getInstance();
     
     @Before
     public void setUp(Scenario scenario) {

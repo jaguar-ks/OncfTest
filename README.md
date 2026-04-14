@@ -45,7 +45,7 @@ mvn -version
 2. Clone the repository.
 
 ```bash
-git clone <your-repository-url>
+git clone git@github.com:jaguar-ks/OncfTest.git
 ```
 
 3. Enter the project folder.

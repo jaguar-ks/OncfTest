@@ -1,4 +1,4 @@
-package oncf.test;
+package oncf;
 
 /**
  * Hello world!

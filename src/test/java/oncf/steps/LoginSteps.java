@@ -15,21 +15,28 @@ public class LoginSteps {
     public void setLoginPage() {
         loginPage = new LoginPage();
     }
+    
+    @And("the user closed the cookies baner")
+    public void closeCookiePopUp() {
+        loginPage.closeCookiesBaner();
+    }
 
     @Given("the user click on the user login icon")
     public void clickOnUserLoginIcon() {
         loginPage.openLoginPannel();
     }
 
-    @When("the user enters the email {email}")
-    @And("the user enters the password {password}")
-    @And("the user click the login button")
+    @When("the user enters the email: {string} and password: {string}")
     public void entreUserCredentials(String email, String password) {
         loginPage.insertCredentials(email, password);
+    }
+    
+    @And("the user click the login button")
+    public void submitCredentials() {
         loginPage.clickLoginButton();
     }
 
-    @Then("the user must see the following results: {result}")
+    @Then("the user must see a popup displaying the message: {string}")
     public void checkMessage(String expectedMessage) {
         assertTrue(
             loginPage.checkAlertMessage(
